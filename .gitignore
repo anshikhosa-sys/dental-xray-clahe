@@ -1,0 +1,12 @@
+#ignore everything, then allow only the code
+*
+!.gitignore
+!README.md
+!requirements.txt
+!pytest.ini
+!enhance_dataset.py
+!compare.py
+!measure_settings.py
+!plot_settings.py
+!tests/
+!tests/*.py
