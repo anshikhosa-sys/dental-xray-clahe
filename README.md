@@ -4,6 +4,26 @@ CLAHE contrast enhancement for panoramic dental X-rays, plus the scripts used to
 
 Recommended settings: `clip_limit=2.0`, `tile_grid_size=8`.
 
+Built during a computer vision internship to prepare X-rays for a tooth segmentation model.
+
+## Results
+
+Measured over 595 labeled panoramic X-rays from the Kaggle dataset (3 of the 598 have no teeth labeled), using the tooth polygons as masks. See [Measuring settings](#measuring-settings) for how each number is computed.
+
+| Setting | Washout at 255 (%) | Near white 250+ (%) | Edge contrast | Grain |
+| --- | --- | --- | --- | --- |
+| Original | 0.0071 | 0.02 | 11.5 | 2.55 |
+| Global histogram equalization | 0.0103 | 0.73 | 17.8 | 3.30 |
+| CLAHE clip 2, tile 4 | 0.0079 | 0.42 | 18.4 | 3.64 |
+| **CLAHE clip 2, tile 8** | **0.0073** | **0.21** | **19.1** | **4.04** |
+| CLAHE clip 3, tile 16 | 0.0074 | 0.15 | 21.1 | 5.26 |
+| CLAHE clip 4, tile 4 | 0.0728 | 1.79 | 22.1 | 4.48 |
+
+- Clip 2, tile 8 raises tooth edge contrast by 67% over the original while keeping washout at the original's level.
+- Compared with global histogram equalization it has higher edge contrast in 468 of 595 images and the same or less near-white washout in 569. Global equalization does leave less grain (CLAHE is grainier in 566 of 595).
+- Edge contrast keeps rising with the clip limit, but so does grain, so higher clips trade smoothness for edges. Clip 2, tile 8 has the highest edge contrast among settings with at most 0.25% near white and grain around 4. Those limits are a judgment call, not a hard optimum.
+- The dataset's PNG masks are 4083 px wide and do not line up with the 2041 px X-rays, so the measurements use the JSON tooth polygons in `ann/` instead.
+
 ## Use it from Python
 
 ```python
