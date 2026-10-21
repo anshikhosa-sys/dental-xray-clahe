@@ -4,7 +4,7 @@ CLAHE contrast enhancement for panoramic dental X-rays, plus the scripts used to
 
 Recommended settings: `clip_limit=2.0`, `tile_grid_size=8`.
 
-Built during a computer vision internship to prepare X-rays for a tooth segmentation model.
+A personal project exploring how to preprocess dental X-rays so tooth roots and jawbone edges are easier to see, for example before training a tooth segmentation model.
 
 ## Results
 
